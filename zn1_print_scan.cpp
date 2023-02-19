@@ -1,8 +1,8 @@
 //
 // Created by daria on 19.02.2023.
 //
-#include "cstdio"
-#include "cmath"
+#include "cstdio" // stdio.h
+#include "cmath" //math.h
 int main(){
     int k; float a,b,s;
     scanf_s ("%f %f",&a,&b);
