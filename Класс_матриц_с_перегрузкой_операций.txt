@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <math.h>
+#include <iostream>
+using namespace std;
+
+class Matrix {
+	int**a;
+	int n,m;
+public:
+	Matrix ();
+	Matrix (int,int);
+	Matrix (const Matrix &);
+	Matrix (char*);
+	/*~Matrix ();*/
+	void SetMatrix();
+	void GetMatrix();
+	Matrix &operator+(const Matrix &);
+	Matrix *operator-(const Matrix &);
+};
+
+Matrix:: Matrix(){                         //конструктор нулевой матрицы
+	n=0;m=0;a=0;
+};
+Matrix:: Matrix(int n1, int n2){
+	n=n1; m=n2;                        //конструктор матрицы
+	a=new int *[n];
+	for (int i=0;i<n;i++)
+		a[i]=new int [m];
+};
+void Matrix:: SetMatrix(){
+	int i,j;                             //ввод матрицы
+	for (i=0;i<n;i++)
+		for (j=0;j<m;j++)
+			cin>>a[i][j];
+};
+void Matrix:: GetMatrix(){
+	int i,j;                            //вывод матрицы
+  for (i=0;i<n;i++){
+   for (j=0;j<m;j++)                                          
+	 cout<<a[i][j]<<' ';
+   cout<<endl;};
+  cout<<endl;
+
+};
+/*Matrix:: ~Matrix (){
+	if (n>0 && m>0){
+		for (int i=0;i<n;i++)
+			for (int j=0;j<m;j++)
+			   delete &a[i][j];
+		a=0;n=0;m=0;};
+};*/
+Matrix & Matrix:: operator+(const Matrix &r){
+	Matrix *z; int i,j;
+	z=new Matrix (n,m);                             //сложение матриц
+	for (int i=0;i<n;i++)
+			for (int j=0;j<m;j++)
+				z->a[i][j]=a[i][j]+r.a[i][j];
+	return *z;
+};
+Matrix * Matrix:: operator-(const Matrix &r){
+	Matrix *z; int i,j;
+	z=new Matrix (n,m);                             //вычитание матриц
+	for (int i=0;i<n;i++)
+			for (int j=0;j<m;j++)
+				z->a[i][j]=a[i][j]-r.a[i][j];
+	return z;
+};
+
+void main (){
+	Matrix at(2,2),bt,ft; Matrix *ct; int k;
+	bt=Matrix(2,2);
+	at.SetMatrix();
+	bt.SetMatrix();
+	ft=at+bt;
+	ct=at-bt;
+
+	at.GetMatrix();
+	bt.GetMatrix();
+	ft.GetMatrix();
+	(*ct).GetMatrix();
+
+	cin>>k;
+}

@@ -1,0 +1,21 @@
+#include <stdio.h>
+#include <math.h>
+void main () {
+int k,n,i;	float a,b,c,d,x1,x2,p1,p2;
+n=2;
+for (i=0;i<n;i++){
+printf("Input a b c \n");
+scanf_s ("%f %f %f", &a,&b,&c);
+d=b*b-4*a*c;
+if (a==0) printf("Lineinoe uravnenie\n");
+ else if(d<0) printf ("Komplex. korni\n");
+	else {
+     x1=(-b+sqrt(d))/(2*a);
+     x2=(-b-sqrt(d))/(2*a);
+	 printf("\ x1=%f   x2=%f  \n",x1,x2);
+     printf("Proverka\n");
+     p1=a*x1*x1+b*x1+c;
+     p2=a*x2*x2+b*x2+c;
+     printf("\ p1=%f   p2=%f  \n",p1,p2);}}
+ scanf_s("%d",&k);
+}

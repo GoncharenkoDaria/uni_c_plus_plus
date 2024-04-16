@@ -1,0 +1,87 @@
+#include <stdio.h>
+#include <math.h>
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+class pointf{
+public:
+	double x,y;
+	double rast1(){
+		return (sqrt(x*x+y*y));};
+	double rast (pointf t){
+		return sqrt((x-t.x)*(x-t.x)+(y-t.y)*(y-t.y));};
+};
+
+double xc[]={3, 5, 24, 8, 7, 2};
+double yc[]={4, 12, 7, 6, 4, 9};
+
+pointf *vvod_p(int );
+void file_bin_sozd (char *, pointf *,int);
+void vvod_file (char *);
+pointf *vvod_bin(char *, int &);
+void dobav_in_end(char *, pointf &);
+
+void main () {
+	pointf *z,*zp; pointf t; int n,k;
+	n=5;
+	z=vvod_p(n);
+	t.x=8; t.y=9;
+ //   file_bin_sozd("File1.dat",z,n);
+	vvod_file("File1.dat");
+	cout<<endl;
+//	zp=vvod_bin("File1.dat",n);
+	dobav_in_end("File1.dat",t);
+	vvod_file("File1.dat");
+	cin>>k;
+}
+
+pointf *vvod_p(int n){                       //ввод массива точек
+	pointf *p; int i;
+	p = new pointf [n];
+	for (i=0;i<n;i++){
+		/*cin>>p[i].x>>p[i].y;*/
+		p[i].x=xc[i];
+		p[i].y=yc[i];}
+	return p;
+}
+void file_bin_sozd (char *st, pointf *t,int n){
+	fstream f; int i;
+	f.open(st,ios::binary| ios::out);              //создаём бинарный файл
+	for(i=0;i<n;i++)
+		f.write((char *)&t[i], sizeof(pointf));
+	f.close();
+}
+void vvod_file (char * st){
+	fstream f; pointf t; int i,n,len;            //выводим содержимое файла на экран
+	len=sizeof(t);
+	f.open(st,ios::binary|ios::in);
+	while(!f.eof()){
+		f.read((char *)&t,len);
+		if(f.eof()) break;
+		cout<<t.x<<" "<<t.y<<endl;
+	}
+	f.close();
+}
+pointf *vvod_bin(char *st, int &n){
+	pointf *t; fstream f; int i,j,len,l;
+	f.open(st, ios::binary|ios::in|ios::out);          //передаём содержимое файла в массив
+	f.seekg(0,ios::end);
+	len=f.tellg(); l=sizeof(pointf);
+	n=len/l;
+	t=new pointf [n];
+	f.seekg(0,ios::beg);
+	for(i=0;i<n;i++){
+		f.read((char*)&t[i],l);
+		cout<<t[i].x<<" "<<t[i].y<<endl;
+	}
+	f.close(); return t;
+};
+void dobav_in_end(char *st, pointf &p){
+	fstream f; int len;
+	len=sizeof(pointf);                               //добавляем запись в конец файла
+	f.open(st,ios::binary|ios::in|ios::out);
+	f.seekg(0,ios::end);
+	f.write((char*)&p,len);
+	f.close();
+}

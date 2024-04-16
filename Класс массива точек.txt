@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <math.h>
+#include <iostream>
+using namespace std;
+
+class pointf{
+public:
+	double x,y;
+	double rast1(){
+		return (sqrt(x*x+y*y));};
+	double rast (pointf t){
+		return sqrt((x-t.x)*(x-t.x)+(y-t.y)*(y-t.y));};
+};
+
+double xc[]={3, 5, 24, 8, 7, 2};
+double yc[]={4, 12, 7, 6, 4, 9};
+
+pointf *vvod_p(int );
+double **matr_rast (pointf *, int);
+pointf sr_point (pointf *, int);
+double *matr_rast_sr (pointf *, int , pointf);
+
+void main () {
+	pointf *z,*zp; pointf tsr; int i,j,n,k; double **a; double *b;
+	n=4;
+
+	z=vvod_p(n);
+	for (i=0;i<n;i++)
+		cout<<z[i].x<<","<<z[i].y<<endl;
+
+	a=matr_rast(z,n);
+	for (i=0;i<n-1;i++){
+		for (j=0;j<n-1;j++)
+			cout<<a[i][j]<<"  ";
+		cout<<endl;}
+
+	cout<<endl;
+	tsr=sr_point(z,n);
+	cout<<tsr.x<<","<<tsr.y<<endl;
+
+	b=matr_rast_sr(z,n,tsr);
+	for (i=0;i<n;i++)
+		cout<<b[i]<<" ";
+	cout<<endl;
+
+	cin>>k;
+
+}
+
+pointf *vvod_p(int n){                       //ввод массива точек
+	pointf *p; int i;
+	p = new pointf [n];
+	for (i=0;i<n;i++){
+		/*cin>>p[i].x>>p[i].y;*/
+		p[i].x=xc[i];
+		p[i].y=yc[i];}
+	return p;
+}
+
+double **matr_rast (pointf *a, int n){          //матрица расстояний между точками
+	double **r; int i,j;
+	r=new double * [n-1];
+	for (i=0;i<n-1;i++)
+		r[i]=new double [n-1];
+	for (i=0;i<n-1;i++)
+		for (j=0;j<n-1;j++)
+			r[i][j]=0;
+
+	for(i=0;i<n-2;i++)
+		for (j=i+1; j<n-1;j++)
+			r[i][j]=a[i].rast(a[j]);
+	return r;
+}
+
+pointf sr_point (pointf *a, int n){             //средняя точка
+	int i,j; pointf srt; double l,m;
+	l=0; m=0;
+	for (i=0;i<n;i++){
+		l=a[i].x+l;
+		m=a[i].y+m;}
+	srt.x=l/n;
+	srt.y=m/n;
+	return srt;
+}
+
+double *matr_rast_sr (pointf *a, int n, pointf fc){           //массив расстояний от средней до каждой точки
+	double *r; int i,j;
+	r=new double [n];
+
+	for(i=0;i<n;i++)
+		r[i]=a[i].rast(fc);
+	return r;
+}

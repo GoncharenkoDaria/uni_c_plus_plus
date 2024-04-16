@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <math.h>
+
+void swap (int*,int*);
+void sort_po(int*,int);
+
+int xc[]= { 6, 12, 5, 53,
+	        89, 59,45,38,
+			23,44,12,11};
+
+void main () {
+int **p; int*a; int i,j,n,m,k,r;
+n=3;m=4;r=0;
+
+a =new int[n];
+
+for (i=0;i<n;i++) {
+	 a[i]=xc[r];
+	 r++;}
+
+for (i=0;i<n;i++)
+	printf("%d ",a[i]);
+
+printf("\n");
+
+for (i=0;i<n;i++)
+	sort_po(a,n);
+
+for (i=0;i<n;i++)
+	printf("%d ",a[i]);
+
+scanf_s("%d",&k); 
+}
+void swap(int*a,int*b){
+int buf;                                                //функция обмена значений переменных
+buf=*a;*a=*b;*b=buf;
+}
+
+void sort_po(int*a,int n){                            //функция сортировки простым обиеном
+	int i,j,flag;
+	flag=1;
+	while (flag) {
+		flag=0;
+		for (i=0;i<n-1;i++)
+			if (a[i]>a[i+1]) {
+				swap (&a[i],&a[i+1]); flag=1;}
+	}
+}

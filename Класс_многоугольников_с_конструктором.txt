@@ -1,0 +1,72 @@
+/*задаем массив точек. эти точки вершины многоугольника. находим его периметр*/
+#include <stdio.h>
+#include <math.h>
+#include <iostream>
+using namespace std;
+
+class pointf{
+public:
+	double x,y;
+	double rast1(){
+		return (sqrt(x*x+y*y));};
+	double rast (pointf t){
+		return sqrt((x-t.x)*(x-t.x)+(y-t.y)*(y-t.y));};
+};
+class mnoug {
+	pointf*z;
+	int n;
+public:
+	double per(){
+		double s; int i;
+		for (i=1,s=0; i<n; i++)
+			s+=z[i-1].rast(z[i]);
+		s+=z[0].rast(z[n-1]);
+	   return s;};
+	mnoug (pointf *p, int n1){
+		n=n1;z=new pointf [n];
+		for (int i=0; i<n;i++)
+			z[i]=p[i];};
+	mnoug (){};
+/*	~mnoug(){
+		if (n>0) delete[]z;};*/
+};
+
+double xc[] = {3, 5, 10, 8, 7, 2, 5, 7, 1, 6};
+double yc[] = {4, 12, 7, 6, 4, 9, 6, 7, 4, 2};
+
+pointf *vvod_p(int );
+pointf *vivod_p(int , pointf *);
+
+int main () {
+	pointf *z; int i,j,n,m,k; mnoug tz;
+	n=6;
+	z=new pointf [n];
+	z=vvod_p(n);
+	*vivod_p(n, z);
+
+	tz=mnoug (z,n);
+	cout<<tz.per();
+
+	cin>>k;
+	//~mnoug();
+
+}
+
+
+
+pointf *vvod_p(int n){                       //ввод массива точек
+	pointf *p; int i;
+	p = new pointf [n];
+	for (i=0;i<n;i++){
+		/*cin>>p[i].x>>p[i].y;*/
+		p[i].x=xc[i];
+		p[i].y=yc[i];}
+	return p;
+}
+
+pointf *vivod_p(int n, pointf *p){                        //вывод массива точек
+    int i;
+	for (i=0;i<n;i++)
+		cout<<p[i].x<<","<<p[i].y<<endl;
+	return p;
+}

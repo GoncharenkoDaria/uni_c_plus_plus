@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <math.h>
+
+void swap (int*,int*);
+void sort_po(int*,int);
+int **vvod_matr(int, int);
+int **vivod_matr(int **, int, int);
+
+int xc[]= { 6, 12, 5, 53,
+	        89, 59,45,38,
+			23,44,12,11};
+
+void main () {
+int **a,**b; int i,j,n,m,k,r;
+n=2;m=3;r=0;
+a=vvod_matr(n,m);
+
+printf("Matrix a \n");
+**vivod_matr(a,n,m);
+
+b=vvod_matr(n,m);
+
+printf("Matrix b \n");
+**vivod_matr(b,n,m);
+
+for (i=0;i<n;i++)
+	sort_po(b[i],m);
+
+printf("New matrix b \n");
+**vivod_matr(b,n,m);
+
+scanf_s("%d",&k); 
+}
+void swap(int*a,int*b){
+int buf;                                                //функция обмена значений переменных
+buf=*a;*a=*b;*b=buf;
+}
+
+void sort_po(int*a,int n){                            //функция сортировки простым обиеном
+	int i,j,flag;
+	flag=1;
+	while (flag) {
+		flag=0;
+		for (i=0;i<n-1;i++)
+			if (a[i]>a[i+1]) {
+				swap (&a[i],&a[i+1]); 
+				flag=1;}
+	}
+}
+
+int **vvod_matr(int n, int m){                          //функция ввода матрицы
+	int i,j; int **p;
+	p=new int*[n];
+	for (i=0;i<n;i++) p[i]=new int [m];
+	for (i=0;i<n;i++)
+		for (j=0;j<m;j++)
+			scanf_s ("%d", &p[i][j]);
+	return p;
+}
+int **vivod_matr(int **p, int n, int m){
+	int i,j;
+for (i=0;i<n;i++){
+ for (j=0;j<m;j++)                                          //функция ввывода матрицы
+	 printf ("%d ",p[i][j]);
+ printf("\n");}
+printf("\n");
+return p;
+}

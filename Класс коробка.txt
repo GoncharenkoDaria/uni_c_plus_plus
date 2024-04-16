@@ -1,0 +1,34 @@
+/*вводим длину ширину высоту коробки. находимплощадь пола и обьём*/
+#include <stdio.h>
+#include <math.h>
+#include <iostream>
+using namespace std;
+
+class rect {
+	double a,b;
+public:
+	double area() {return a*b;};
+	rect(double a1, double b1){
+		a=a1;b=b1;};
+	rect(){};
+};
+class box: public rect{
+	double z;
+public:
+	double vb(){
+		return area()*z;};
+	box (double a1, double b1, double z1):rect(a1,b1){z=z1;}
+	box(){};
+};
+void main (){
+	box p; rect t1; double a,b,c;
+	cin>>a>>b>>c;
+	cout<<endl;
+	t1=rect(a,b);
+	cout<<t1.area()<<endl;
+
+	p=box(a,b,c);
+	cout<<p.vb();
+
+	cin>>a;
+}

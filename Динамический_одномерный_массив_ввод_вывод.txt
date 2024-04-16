@@ -1,0 +1,11 @@
+#include <stdio.h>
+#include <math.h>
+void main () {
+int *pa, *pb ; int i,j,n,k;
+n=5; pa=new int[n];
+for (i=0;i<n;i++)
+	scanf_s("%d",&pa[i]);
+for (i=0;i<n;i++)
+	printf("%d ",pa[i]);
+scanf_s("%d",&k); 
+}

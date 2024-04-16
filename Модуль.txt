@@ -1,0 +1,137 @@
+#include <stdio.h>
+#include <math.h>
+#include <iostream>
+using namespace std;
+
+class pointf{
+public:
+	double x,y;
+	double rast1(){
+		return (sqrt(x*x+y*y));};
+	double rast (pointf t){
+		return sqrt((x-t.x)*(x-t.x)+(y-t.y)*(y-t.y));};
+};
+/*class line {
+public:
+	pointf t1,t2;
+	double k,b;
+	void k_b (){
+		k=(t2.y-t1.y)/(t2.x-t1.x);
+		b=t1.y-k*t1.x;
+		return (k,b);};
+};*/
+
+class trect{
+public:
+	pointf t1,t2; //,t3,t4;
+	double a(){                                       //1-ая сторона прямоугольника
+		return sqrt((t1.y-t2.y)*(t1.y-t2.y));};
+	double b(){                                       //2-ая сторона прямоугольника
+		return sqrt((t1.x-t2.x)*(t1.x-t2.x));};
+	double s(){                                       //площадь прямоугольника
+		return a()*b();};
+	
+	int prov(pointf t){
+
+		//if (b==t.y
+	}
+};
+
+double xc[] = {3, 5, 10, 8, 7, 2, 5, 7, 1, 6};
+double yc[] = {4, 12, 7, 6, 4, 9, 6, 7, 4, 2};
+
+pointf *vvod_p(int );
+pointf *vivod_p(int , pointf *);
+int prov_t (trect, pointf);
+int prov_p (trect, trect);
+int **matr_per (trect *, int);
+
+int main () {
+	pointf *z; pointf tk; int i,j,n,m,k; int **mper; trect *zp; trect tr;
+	n=5; m=n*2;
+	z=new pointf [m];
+
+	z=vvod_p(m);
+	*vivod_p(m, z);
+
+	zp=new trect [n];
+	for (i=0,j=0; i<m; i+=2){
+		zp[j].t1=z[i];
+		zp[j].t2=z[i+1];
+		j++;
+	}
+
+
+	for (i=0; i<n; i++)
+		cout<<zp[i].t1.x<<","<<zp[i].t1.y <<"; "<<zp[i].t2.x<<","<<zp[i].t2.y<<"; "<<endl;
+
+    for (i=0; i<n; i++)
+    cout<<zp[i].s()<<endl;
+    
+    mper=matr_per(zp,n);
+	for (i=0;i<n;i++){
+		for (j=0;j<n;j++)
+			cout<<mper[i][j]<<"  ";
+		cout<<endl;}
+    
+	cin>>k;
+
+}
+
+
+
+pointf *vvod_p(int n){                       //ввод массива точек
+	pointf *p; int i;
+	p = new pointf [n];
+	for (i=0;i<n;i++){
+		/*cin>>p[i].x>>p[i].y;*/
+		p[i].x=xc[i];
+		p[i].y=yc[i];}
+	return p;
+}
+
+pointf *vivod_p(int n, pointf *p){                        //вывод массива точек
+    int i;
+	for (i=0;i<n;i++)
+		cout<<p[i].x<<","<<p[i].y<<endl;
+	return p;
+}
+
+
+int prov_t (trect pream, pointf t){                               //проверка вхождения точки в прямоугольник
+    double rastx, rasty;                                                //если входит=1, не входит=0
+    rastx = sqrt((pream.t1.x-t.x)*(pream.t1.x-t.x))+sqrt((pream.t2.x-t.x)*(pream.t2.x-t.x));
+    rasty = sqrt((pream.t1.y-t.y)*(pream.t1.y-t.y))+sqrt((pream.t2.y-t.y)*(pream.t2.y-t.y));
+    if (rastx==pream.b() && rasty==pream.a()) return 1;
+     else return 0;
+}
+
+int prov_p (trect pr1, trect pr2){                          //проверка пересечения 2-х прямоугольников
+    pointf t; int c;
+    c=0;
+    t.x=pr1.t1.x; t.y=pr1.t1.y; if (prov_t(pr2,t)==1)  c=1;
+    t.x=pr1.t2.x; t.y=pr1.t1.y; if (prov_t(pr2,t)==1)  c=1;
+    t.x=pr1.t1.x; t.y=pr1.t2.y; if (prov_t(pr2,t)==1)  c=1;
+    t.x=pr1.t2.x; t.y=pr1.t2.y; if (prov_t(pr2,t)==1)  c=1;
+    
+    t.x=pr2.t1.x; t.y=pr2.t1.y; if (prov_t(pr1,t)==1)  c=1;
+    t.x=pr2.t2.x; t.y=pr2.t1.y; if (prov_t(pr1,t)==1)  c=1;
+    t.x=pr2.t1.x; t.y=pr2.t2.y; if (prov_t(pr1,t)==1)  c=1;
+    t.x=pr2.t2.x; t.y=pr2.t2.y; if (prov_t(pr1,t)==1)  c=1;
+    
+    return c;
+}
+int **matr_per (trect *b, int n){
+	int **r; int i,j;
+	r=new int*[n];
+	for (i=0;i<n;i++)
+		r[i]=new int [n];    
+	for (i=0;i<n;i++)
+		for (j=0;j<n;j++)
+			r[i][j]=9;                               //матрица проверки пересечений прямоугольников
+
+	for(i=0;i<n-1;i++)
+		for(j=i+1;j<n;j++)
+			r[i][j]=prov_p(b[i],b[j]);
+	return r;
+}
